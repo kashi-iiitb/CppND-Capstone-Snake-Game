@@ -106,6 +106,8 @@ void Game::Update() {
       // Grow snake and increase speed.
       snake.GrowBody();
       snake.speed -= 0.015;
+      //change the position of poison on snake eating food
+      PlacePoison(poison);
     }
   }
   //Check for poisons
