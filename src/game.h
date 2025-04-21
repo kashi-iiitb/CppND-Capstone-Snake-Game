@@ -19,7 +19,8 @@ class Game {
   Snake snake;
   int food_size{2};
   std::vector<SDL_Point> foods;
-  SDL_Point poison;
+  SDL_Point speed_inc;
+  //SDL_Point speed_dec;
 
   std::random_device dev;
   std::mt19937 engine;
@@ -30,7 +31,8 @@ class Game {
 
   void PlaceFood(SDL_Point &food);
   void Update();
-  void PlacePoison(SDL_Point &poison);
+  void PlaceSpeedInc(SDL_Point &speed_inc);
+  //void PlaceSpeedDec(SDL_Point &speed_dec);  
 };
 
 #endif

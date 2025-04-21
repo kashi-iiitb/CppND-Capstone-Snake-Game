@@ -12,8 +12,8 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
     PlaceFood(food);
     foods.emplace_back(food);
   }
-  SDL_Point poison;
-  PlacePoison(poison);
+  SDL_Point speed_inc;
+  PlaceSpeedInc(speed_inc);
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -31,7 +31,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake);
     Update();
-    renderer.Render(snake, foods, poison);
+    renderer.Render(snake, foods, speed_inc);
 
     frame_end = SDL_GetTicks();
 
@@ -71,7 +71,7 @@ void Game::PlaceFood(SDL_Point &food) {
   }
 }
 
-void Game::PlacePoison(SDL_Point &poison) {
+void Game::PlaceSpeedInc(SDL_Point &speed_inc) {
   int x, y;
   while (true) {
     x = random_w(engine);
@@ -84,8 +84,8 @@ void Game::PlacePoison(SDL_Point &poison) {
     if (is_Occupied) {
       continue;
     }
-    poison.x = x;
-    poison.y = y;
+    speed_inc.x = x;
+    speed_inc.y = y;
     return;
   }
 }
@@ -107,12 +107,13 @@ void Game::Update() {
       snake.GrowBody();
       snake.speed -= 0.015;
       //change the position of poison on snake eating food
-      PlacePoison(poison);
+      PlaceSpeedInc(speed_inc);
     }
   }
   //Check for poisons
-  if (poison.x == new_x && poison.y == new_y) {
-    snake.alive = false;
+  if (speed_inc.x == new_x && speed_inc.y == new_y) {    
+    PlaceSpeedInc(speed_inc);
+    snake.speed += 0.01;
     return;
   }
 }
