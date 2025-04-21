@@ -17,7 +17,9 @@ class Game {
 
  private:
   Snake snake;
-  SDL_Point food;
+  int food_size{2};
+  std::vector<SDL_Point> foods;
+  SDL_Point poison;
 
   std::random_device dev;
   std::mt19937 engine;
@@ -26,8 +28,9 @@ class Game {
 
   int score{0};
 
-  void PlaceFood();
+  void PlaceFood(SDL_Point &food);
   void Update();
+  void PlacePoison(SDL_Point &poison);
 };
 
 #endif
