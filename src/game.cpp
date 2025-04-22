@@ -103,17 +103,20 @@ void Game::Update() {
     if (food.x == new_x && food.y == new_y) {
       score++;
       PlaceFood(food);
-      // Grow snake and increase speed.
+      // Grow snake
       snake.GrowBody();
-      snake.speed -= 0.015;
+      //reduce the snake speed as length increases.
+      //Lower threshold speed 0.12f to keep it a bit challenging
+      if(snake.speed > 0.12f)
+        snake.speed -= 0.01;
       //change the position of poison on snake eating food
-      PlaceSpeedInc(speed_inc);
+      //PlaceSpeedInc(speed_inc);
     }
   }
   //Check for poisons
   if (speed_inc.x == new_x && speed_inc.y == new_y) {    
     PlaceSpeedInc(speed_inc);
-    snake.speed += 0.01;
+    snake.speed += 0.02;
     return;
   }
 }
