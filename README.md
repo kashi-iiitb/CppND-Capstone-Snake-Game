@@ -7,13 +7,14 @@ This is a starter repo for the Capstone project in the [Udacity C++ Nanodegree P
 Snake initially starts with length 1 and higher speed and gradually speed keeps decreasing as the snake length increases. This helps to increase the user confidence to play the game and player doesn't feel frustrated/anxious. Instead, at the end of the game the player feels an emotion of accomplishment.
 To make the game a bit more challenging I have introduced a RED food, if snake eats it, snake speed will increase. User needs to avoid the RED food.
 
-## Features added to Snake Game:
+## Added Game features:
 1. Multiple food items for Snake to eat: Eating Yellow food increases the length and reduces the Snake speed.
 2. Speed Increase (Red food): Eating Red food increases the Snake speed. User needs to avoid the Red food.
-3. Added functionality to store Highest score and Name of that user to the file (highest.txt) https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/main.cpp#L16. 
+3. Added functionality to store Highest score and UserName to the file (/src/highest.txt).
 
+# Addressed rubric points
 ## Loop, Functions, I/O:
-1. Reads the user name at the console and from the input filestream https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/main.cpp#L26
+1. Reads the user name at the console and from the input filestream. https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/main.cpp#L26
 2. stores the user name and score to the file if score is highest https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/main.cpp#L45
 
 ## Object Oriented Programming:
