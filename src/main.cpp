@@ -16,16 +16,20 @@ int main() {
   std::string filename = "../src/highest.txt";
   std::ifstream inScoreFile(filename);
   std::ofstream outScoreFile;
+  int dLevel;
 
-
-  Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
-  Controller controller;
   std::cout <<  "Hi!! Welcome to Snake Game!\n"
                 "Please, enter your name to Proceed\n";
   std::cout << "User: " ;
   std::cin >> username;
+  std::cout << "Please select the difficulty level: \n1. Easy\n2. Normal\n3. Hard\n" ;
+  std::cin >> dLevel;  
+
+
+  Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
+  Controller controller;
   //std::cout << "Size: " << game.GetSize() << "\n";
-  Game game(kGridWidth, kGridHeight);
+  Game game(kGridWidth, kGridHeight, dLevel);
   game.Run(controller, renderer, kMsPerFrame);
   std::cout << "Thank you for playing: " << username <<"\n";
   std::cout << "Game has terminated successfully!\n";
