@@ -24,8 +24,6 @@ class Game {
   SDL_Point poison{poison.x = -1, poison.y = -1};
   std::vector<SDL_Point> wall;
   
-  //SDL_Point speed_dec;
-
   std::random_device dev;
   std::mt19937 engine;
   std::uniform_int_distribution<int> random_w;
@@ -37,7 +35,9 @@ class Game {
   void PlaceFood(SDL_Point &food);
   void Update();
   void PlacePoison(SDL_Point &poison);
-  void PlaceWall(SDL_Point &wall);  
+  void PlaceWall(std::vector<SDL_Point> &wall);  
+  bool PoisonCell(int x, int y);
+  bool FoodCell(int x, int y);
 };
 
 #endif

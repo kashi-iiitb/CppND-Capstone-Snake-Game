@@ -39,7 +39,7 @@ Renderer::~Renderer() {
 }
 
 void Renderer::Render(Snake const snake, std::vector<SDL_Point> const &foods,
-                      SDL_Point const & poison) {
+                      SDL_Point const & poison, std::vector<SDL_Point> &wall) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -58,9 +58,18 @@ void Renderer::Render(Snake const snake, std::vector<SDL_Point> const &foods,
   // Render poison
   if(poison.x != -1) {
     SDL_SetRenderDrawColor(sdl_renderer, 0x8F, 0x00, 0xFF, 0xFF);
-      block.x = poison.x * block.w;
-      block.y = poison.y * block.h;
+    block.x = poison.x * block.w;
+    block.y = poison.y * block.h;
+    SDL_RenderFillRect(sdl_renderer, &block);
+  }
+  // Render wall's body
+  if(!wall.empty()) {
+    SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xFF, 0xFF, 0xFF);
+    for (SDL_Point const &point : wall) {
+      block.x = point.x * block.w;
+      block.y = point.y * block.h;
       SDL_RenderFillRect(sdl_renderer, &block);
+    }
   }
   // Render snake's body
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);

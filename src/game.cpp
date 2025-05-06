@@ -14,11 +14,16 @@ Game::Game(std::size_t grid_width, std::size_t grid_height, int dLevel)
     foods.emplace_back(food);
   }
   
+  wall.clear();
+
   if(diff_level == 1){
     snake.speed = 0.3f;
   } else if(diff_level>=2) { 
-    SDL_Point poison;
+    snake.speed = 0.35f;
     PlacePoison(poison);
+    if(diff_level == 3){
+      PlaceWall(wall);
+    }
   }
 }
 
@@ -40,8 +45,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     //Pause the game if 'Escape' key is pressed
     if(gamePause == false)
       Update();
-    renderer.Render(snake, foods, poison);
-
+    renderer.Render(snake, foods, poison, wall);
 
     frame_end = SDL_GetTicks();
 
@@ -81,23 +85,46 @@ void Game::PlaceFood(SDL_Point &food) {
   }
 }
 
-void Game::PlaceWall(SDL_Point &wall) {
+bool Game::PoisonCell(int x, int y){
+  if(poison.x == x && poison.y == y)
+    return true;
+  else
+    return false;
+}
+bool Game::FoodCell(int x, int y){
+  for (auto const &item : Game::wall) {
+    if (x == item.x && y == item.y) {
+      return true;
+    }    
+  }
+  return false;
+}
+
+void Game::PlaceWall(std::vector<SDL_Point> &wall) {
+  SDL_Point point1;
+  SDL_Point point2;
+  SDL_Point point3;
   int x, y;
   while (true) {
     x = random_w(engine);
     y = random_h(engine);
-    // Check that the location is not occupied by a snake item before placing poison.
-    bool is_Occupied = false;
-    if (snake.SnakeCell(x, y)) {
-      is_Occupied = true;
+    // Check that the location is not occupied by a snake/Poison/Food item before placing
+    // food.
+    if (!snake.SnakeCell(x, y) && !Game::PoisonCell(x, y) && !Game::FoodCell(x, y)) {
+      wall.clear();
+      point2.x = x;
+      point2.y = y;
+      point1.x = x-1;
+      point1.y = y;
+      point3.x = x+1;
+      point3.y = y;
+      wall.push_back(point1);
+      wall.push_back(point2);
+      wall.push_back(point3);
+      return;
     }
-    if (is_Occupied) {
-      continue;
-    }
-    poison.x = x;
-    poison.y = y;
-    return;
   }
+  return;
 }
 
 void Game::PlacePoison(SDL_Point &poison) {
@@ -121,8 +148,7 @@ void Game::PlacePoison(SDL_Point &poison) {
 
 void Game::Update() {
   if (!snake.alive) return;
-  //if (gamePause == true) return;
-
+  
   snake.Update();
 
   int new_x = static_cast<int>(snake.head_x);
@@ -149,6 +175,15 @@ void Game::Update() {
     //PlacePoison(poison);
     //snake.speed += 0.02;
     return;
+  }
+  //check for wall
+  if(!Game::wall.empty()){
+    for(auto &brick: Game::wall){
+      if(brick.x == new_x && brick.y == new_y){
+        snake.alive = false;
+        return;
+      }
+    }
   }
 }
 
