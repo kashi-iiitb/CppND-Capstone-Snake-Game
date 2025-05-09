@@ -1,6 +1,7 @@
 #include "game.h"
 #include <iostream>
-#include "SDL.h"
+//#include "SDL.h"
+#include <SDL2/SDL.h>
 
 Game::Game(std::size_t grid_width, std::size_t grid_height, int dLevel)
     : snake(grid_width, grid_height),
@@ -43,9 +44,9 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, snake, gamePause);
     //Pause the game if 'Escape' key is pressed
-    if(gamePause == false)
-      Update();
-    renderer.Render(snake, foods, poison, wall);
+    //if(gamePause == false)
+      Update(running, gamePause);
+    renderer.Render(snake, foods, poison, wall, gamePause, *this);
 
     frame_end = SDL_GetTicks();
 
@@ -68,6 +69,8 @@ void Game::Run(Controller const &controller, Renderer &renderer,
       SDL_Delay(target_frame_duration - frame_duration);
     }
   }
+  
+
 }
 
 void Game::PlaceFood(SDL_Point &food) {
@@ -110,7 +113,7 @@ void Game::PlaceWall(std::vector<SDL_Point> &wall) {
     y = random_h(engine);
     // Check that the location is not occupied by a snake/Poison/Food item before placing
     // food.
-    if (!snake.SnakeCell(x, y) && !Game::PoisonCell(x, y) && !Game::FoodCell(x, y)) {
+    if (!snake.SnakeCell(x, y) && !Game::PoisonCell(x, y)){ // && !Game::FoodCell(x, y)) {
       wall.clear();
       point2.x = x;
       point2.y = y;
@@ -146,8 +149,18 @@ void Game::PlacePoison(SDL_Point &poison) {
   }
 }
 
-void Game::Update() {
-  if (!snake.alive) return;
+void Game::Update(bool &running, bool gamePause) {
+  if(gamePause){
+    return;
+  }
+  int dummy;
+  if (!snake.alive) {
+    
+    //std::string msgText{"Score: " + std::to_string(game.GetScore()) + "\n Size: " + std::to_string(game.GetSize())};
+    //SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "GAME OVER!", msgText.c_str(), NULL); 
+    running = false;
+    return;
+  }
   
   snake.Update();
 

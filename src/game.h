@@ -6,6 +6,7 @@
 #include "controller.h"
 #include "renderer.h"
 #include "snake.h"
+class Renderer;
 
 class Game {
  public:
@@ -15,7 +16,6 @@ class Game {
            std::size_t target_frame_duration);
   int GetScore() const;
   int GetSize() const;
-  //bool gamePause;
 
  private:
   Snake snake;
@@ -33,7 +33,7 @@ class Game {
   int diff_level{0};
 
   void PlaceFood(SDL_Point &food);
-  void Update();
+  void Update(bool &running, bool gamePause);
   void PlacePoison(SDL_Point &poison);
   void PlaceWall(std::vector<SDL_Point> &wall);  
   bool PoisonCell(int x, int y);
