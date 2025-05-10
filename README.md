@@ -5,15 +5,16 @@ This is a starter repo for the Capstone project in the [Udacity C++ Nanodegree P
 <img src="Modified_Snake_Game.gif"/>
 
 Snake initially starts with length 1 and higher speed and gradually speed keeps decreasing as the snake length increases. This helps to increase the user confidence to play the game and player doesn't feel frustrated/anxious. Instead, at the end of the game the player feels an emotion of accomplishment.
-To make the game a bit more challenging I have introduced a RED food, if snake eats it, snake speed will increase. User needs to avoid the RED food.
+To make the game a bit more challenging I have introduced Difficulty levels Easy/Normal/Hard. User needs to avoid Poison, Wall and should try to eat the food.
 
 ## Added Game features:
-1. Introduced Difficulty levels (Easy/Normal/Hard).
-   Easy: No poison, Normal: Poison, Hard: Poison + Wall
-3. Multiple food items for Snake to eat: Eating Yellow food increases the length and reduces the Snake speed.
-4. Poison (Red food): Eating Red food will kill the snake. User needs to avoid the Red food.
-5. If snake hits the wall, it will die.
-6. Keeps track of the highest score and UserName to the file (/src/highest.txt) and is displayed at the end of the game.
+1. Introduced **Difficulty levels** (Easy/Normal/Hard).
+   **Easy**: No poison, **Normal**: Poison, **Hard**: Poison + Wall
+3. **PAUSE**: Game pauses on "ESC" and resumes on "Enter" key press
+4. **Multiple food items** for Snake to eat: Eating Yellow food increases the length and reduces the Snake speed.
+5. **Poison (Red food)**: Eating Red food will kill the snake. User needs to avoid the Red food.
+6. **Wall**: If snake hits the wall, it will die.
+7. **Highest Score:** Keeps track of the highest score and UserName to the file (/src/highest.txt) and is displayed at the end of the game.
 
 ## Addressed rubric points
 ### Loop, Functions, I/O:
