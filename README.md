@@ -28,7 +28,7 @@ To make the game a bit more challenging I have introduced a RED food, if snake e
 |----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | The project uses Object Oriented Programming techniques.                         | Per the project structure the code uses 4 classes : `Snake`, `Game`, `Controller` and `Renderer`. All the data and the control logic is encapsulated in them.                                                                                     |
 | Classes use appropriate access specifiers for class members.                     | All class data members are explicitly specified as public, protected, or private.
-Member data that is subject to an invariant is hidden from the user and accessed via member methods.
+Member data that is subject to an invariant is hidden from the user and accessed via member methods.|
 For example 'std::vector<SDL_Point> foods' and the function which operates on it 'void PlaceSpeedInc(SDL_Point &speed_inc);' is added as private member. https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/game.h#L21 |
 | Class constructors utilize member initialization lists.                          | Renderer, Game and Snake constructors use initialization lists. For example Snake constructor: https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/snake.h#L11|
 | Classes abstract implementation details from their interfaces.                   | The operations/methods which can be applied on Object of the class are declared with public access specifier and operations/methods used internal to the object are declared with private access specifiers in all the classes - Snake, Game, Renderer and Controller.|
@@ -43,10 +43,10 @@ For example 'std::vector<SDL_Point> foods' and the function which operates on it
 |-------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
 | The project makes use of references in function declarations.                             | Snake object is passed by reference in https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/controller.cpp#L12|
 | The project uses destructor(s) appropriately.                                             | Renderer destructor destroys sdl_window. |
-| The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | X                                                                                                              |
-| The project follows the Rule of 5.                                                        | X                                                                                                              |
-| The project uses move semantics to move data, instead of copying it, where possible.      | X                                                                                                              |
-| The project uses smart pointers instead of raw pointers.                                  | X                                                                      |
+| The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | Snake object when created in Game() constructor is initialized at the same time |
+| The project follows the Rule of 5.                                                        |    -                                                                                                            |
+| The project uses move semantics to move data, instead of copying it, where possible.      |    -                                                                                                            |
+| The project uses smart pointers instead of raw pointers.                                  |     -                                                                   |
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
