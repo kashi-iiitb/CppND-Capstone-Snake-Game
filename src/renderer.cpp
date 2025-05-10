@@ -73,7 +73,7 @@ void Renderer::Render(Snake const snake, std::vector<SDL_Point> const &foods,
   }
   // Render poison
   if(poison.x != -1) {
-    SDL_SetRenderDrawColor(sdl_renderer, 0x8F, 0x00, 0xFF, 0xFF);
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
     block.x = poison.x * block.w;
     block.y = poison.y * block.h;
     SDL_RenderFillRect(sdl_renderer, &block);
