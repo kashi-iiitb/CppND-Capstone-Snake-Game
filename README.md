@@ -15,7 +15,7 @@ To make the game a bit more challenging I have introduced a RED food, if snake e
 5. If snake hits the wall, it will die.
 6. Keeps track of the highest score and UserName to the file (/src/highest.txt) and is displayed at the end of the game.
 
-# Addressed rubric points
+## Addressed rubric points
 ### Loop, Functions, I/O:
 | Criteria                                                                                       | Explanation and link(s)                                                       |
 |------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
@@ -24,17 +24,29 @@ To make the game a bit more challenging I have introduced a RED food, if snake e
 | The project accepts user input and processes the input.                                        | stores the user name and score to the file if score is highest https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/main.cpp#L45 |
 
 ### Object Oriented Programming:
-1. Class constructors utilize member initialization lists: Renderer, Game and Snake constructors use initialization lists. For example Snake constructor: https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/snake.h#L11
-2. Classes abstract implementation details from their interfaces: The operations/methods which can be applied on Object of the class are declared with public access specifier and operations/methods used internal to the object are declared with private access specifiers in all the classes - Snake, Game, Renderer and Controller. 
-3. Classes are organized with attributes to hold data and methods to perform tasks.
-All class data members are explicitly specified as public, protected, or private.
+| Criteria                                                                         | Explanation and link(s)                                                                                                                                                                                                                           |
+|----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| The project uses Object Oriented Programming techniques.                         | Per the project structure the code uses 4 classes : `Snake`, `Game`, `Controller` and `Renderer`. All the data and the control logic is encapsulated in them.                                                                                     |
+| Classes use appropriate access specifiers for class members.                     | All class data members are explicitly specified as public, protected, or private.
 Member data that is subject to an invariant is hidden from the user and accessed via member methods.
-For example 'std::vector<SDL_Point> foods' and the function which operates on it 'void PlaceSpeedInc(SDL_Point &speed_inc);' is added as private member. https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/game.h#L21
+For example 'std::vector<SDL_Point> foods' and the function which operates on it 'void PlaceSpeedInc(SDL_Point &speed_inc);' is added as private member. https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/game.h#L21 |
+| Class constructors utilize member initialization lists.                          | Renderer, Game and Snake constructors use initialization lists. For example Snake constructor: https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/snake.h#L11|
+| Classes abstract implementation details from their interfaces.                   | The operations/methods which can be applied on Object of the class are declared with public access specifier and operations/methods used internal to the object are declared with private access specifiers in all the classes - Snake, Game, Renderer and Controller.|
+| Classes encapsulate behavior.                                                    | -|                                                                                        |
+| Classes follow an appropriate inheritance hierarchy.                             | -|
+| Overloaded functions allow the same function to operate on different parameters. | -|
+| Derived class functions override virtual base class functions.                   | -|
+| Templates generalize functions in the project.                                   | -|    
 
 ### Memory Management:
-1. The project makes use of references in function declarations. Snake object is passed by reference in https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/controller.cpp#L12
-2. The project uses destructors appropriately. Renderer destructor destroys sdl_window.
-3. The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate.
+| Criteria                                                                                  | Explanation and link(s)                                                                                        |
+|-------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| The project makes use of references in function declarations.                             | Snake object is passed by reference in https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/controller.cpp#L12|
+| The project uses destructor(s) appropriately.                                             | Renderer destructor destroys sdl_window. |
+| The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | X                                                                                                              |
+| The project follows the Rule of 5.                                                        | X                                                                                                              |
+| The project uses move semantics to move data, instead of copying it, where possible.      | X                                                                                                              |
+| The project uses smart pointers instead of raw pointers.                                  | X                                                                      |
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
