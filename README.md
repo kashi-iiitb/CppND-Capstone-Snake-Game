@@ -8,16 +8,22 @@ Snake initially starts with length 1 and higher speed and gradually speed keeps 
 To make the game a bit more challenging I have introduced a RED food, if snake eats it, snake speed will increase. User needs to avoid the RED food.
 
 ## Added Game features:
-1. Multiple food items for Snake to eat: Eating Yellow food increases the length and reduces the Snake speed.
-2. Speed Increase (Red food): Eating Red food increases the Snake speed. User needs to avoid the Red food.
-3. Added functionality to store Highest score and UserName to the file (/src/highest.txt).
+1. Introduced Difficulty levels (Easy/Normal/Hard).
+   Easy: No poison, Normal: Poison, Hard: Poison + Wall
+3. Multiple food items for Snake to eat: Eating Yellow food increases the length and reduces the Snake speed.
+4. Poison (Red food): Eating Red food will kill the snake. User needs to avoid the Red food.
+5. If snake hits the wall, it will die.
+6. Keeps track of the highest score and UserName to the file (/src/highest.txt) and is displayed at the end of the game.
 
 # Addressed rubric points
-## Loop, Functions, I/O:
-1. Reads the user name at the console and from the input filestream. https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/main.cpp#L26
-2. stores the user name and score to the file if score is highest https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/main.cpp#L45
+### Loop, Functions, I/O:
+| Criteria                                                                                       | Explanation and link(s)                                                       |
+|------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| The project demonstrates an understanding of C++ functions and control structures.             | The whole project is organized with proper use of functions and flow of data. |
+| The project reads data from a file and process the data, or the program writes data to a file. | Reads the user name at the console and from the input filestream. https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/main.cpp#L26 |
+| The project accepts user input and processes the input.                                        | stores the user name and score to the file if score is highest https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/main.cpp#L45 |
 
-## Object Oriented Programming:
+### Object Oriented Programming:
 1. Class constructors utilize member initialization lists: Renderer, Game and Snake constructors use initialization lists. For example Snake constructor: https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/snake.h#L11
 2. Classes abstract implementation details from their interfaces: The operations/methods which can be applied on Object of the class are declared with public access specifier and operations/methods used internal to the object are declared with private access specifiers in all the classes - Snake, Game, Renderer and Controller. 
 3. Classes are organized with attributes to hold data and methods to perform tasks.
@@ -25,7 +31,7 @@ All class data members are explicitly specified as public, protected, or private
 Member data that is subject to an invariant is hidden from the user and accessed via member methods.
 For example 'std::vector<SDL_Point> foods' and the function which operates on it 'void PlaceSpeedInc(SDL_Point &speed_inc);' is added as private member. https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/game.h#L21
 
-## Memory Management:
+### Memory Management:
 1. The project makes use of references in function declarations. Snake object is passed by reference in https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/2c23394d9f020a1943c878c92177829db38812c2/src/controller.cpp#L12
 2. The project uses destructors appropriately. Renderer destructor destroys sdl_window.
 3. The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate.
