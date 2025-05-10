@@ -4,6 +4,7 @@
 #include "renderer.h"
 #include <fstream>
 #include <string>
+#include <memory>
 
 int main() {
   constexpr std::size_t kFramesPerSecond{60};
@@ -35,26 +36,28 @@ int main() {
   std::cout << "Game has terminated successfully!\n";
   std::cout << "Score: " << game.GetScore() << "\n";
   std::cout << "Size: " << game.GetSize() << "\n";
-  if(inScoreFile.is_open()){
-    std::string HSUserName, strHSScore;
-    int HSScore;
-    std::getline(inScoreFile, HSUserName);
-    std::getline(inScoreFile, strHSScore);
-    HSScore = std::stoi(strHSScore);
-    inScoreFile.close();
-    if(game.GetScore() > HSScore){
-      std::cout << "You have got highest score " << username << "!!\n";
-      outScoreFile.open(filename);
-      if(outScoreFile.is_open()){
-        outScoreFile << username << "\n";
-        outScoreFile << std::to_string(game.GetScore());
-        outScoreFile.close();
+  try{
+    //if(inScoreFile.is_open()){
+      std::string HSUserName, strHSScore;
+      int HSScore;
+      std::getline(inScoreFile, HSUserName);
+      std::getline(inScoreFile, strHSScore);
+      HSScore = std::stoi(strHSScore);
+      inScoreFile.close();
+      if(game.GetScore() > HSScore){
+        std::cout << "You have got highest score " << username << "!!\n";
+        outScoreFile.open(filename);
+        if(outScoreFile.is_open()){
+          outScoreFile << username << "\n";
+          outScoreFile << std::to_string(game.GetScore());
+          outScoreFile.close();
+        }
+      } else{
+        std::cout << "The Highest score for the game is: " << HSScore << " by " << HSUserName << "\n";
       }
-    } else{
-      std::cout << "The Highest score for the game is: " << HSScore << " by " << HSUserName << "\n";
-    }
-  } else {
-    std::cout << "Error: Unable to open the Highest score file.\n";
+    //}
+  } catch(const std::exception &e) {
+    std::cerr << "Highest Score File I/O Exception: " << e.what();
   }
   return 0;
 }
