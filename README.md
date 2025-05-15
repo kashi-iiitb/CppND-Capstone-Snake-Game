@@ -4,17 +4,19 @@ This is a starter repo for the Capstone project in the [Udacity C++ Nanodegree P
 
 <img src="Modified_Snake_Game.gif"/>
 
-Snake initially starts with length 1 and higher speed and gradually speed keeps decreasing as the snake length increases. This helps to increase the user confidence to play the game and player doesn't feel frustrated/anxious. Instead, at the end of the game the player feels an emotion of accomplishment.
+Snake initially starts with length 1 and higher speed and gradually speed keeps decreasing as the snake length increases. This helps to increase the user confidence to play the game and player doesn't feel frustrated/anxious. Instead, at the end of the game the player feels an emotion of accomplishment. There is threshold to the lowest snake speed (0.15). It is done to keep the game interesting.
 To make the game a bit more challenging I have introduced Difficulty levels Easy/Normal/Hard. User needs to avoid Poison, Wall and should try to eat the food.
+Bonus food has been added whenever the snake length increases by a factor of 8/16/24/..., bonus food appears for 10 seconds. Eating bonus food will reduce the snake speed.
 
 ## Added Game features:
 1. Introduced **Difficulty levels** (Easy/Normal/Hard).
    **Easy**: No poison, **Normal**: Poison, **Hard**: Poison + Wall
 3. **PAUSE**: Game pauses on "ESC" and resumes on "Enter" key press
-4. **Multiple food items** for Snake to eat: Eating Yellow food increases the length and reduces the Snake speed.
-5. **Poison (Red food)**: Eating Red food will kill the snake. User needs to avoid the Red food.
-6. **Wall**: If snake hits the wall, it will die.
-7. **Highest Score:** Keeps track of the highest score and UserName to the file (/src/highest.txt) and is displayed at the end of the game.
+4. **Healthy food (Yellow)** for Snake to eat: Eating Yellow food increases the length and reduces the Snake speed.
+5. **Poison (Red )**: Eating Red food will kill the snake. User needs to avoid the Red food.
+6. **Bonus Food (Purple food)**: Eating Bonus food will decrease the snake speed.
+7. **Wall**: If snake hits the wall, it will die.
+8. **Highest Score:** Keeps track of the highest score and UserName to the file (/src/highest.txt) and is displayed at the end of the game.
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
@@ -64,12 +66,17 @@ To make the game a bit more challenging I have introduced Difficulty levels Easy
 | The project uses destructor(s) appropriately.                                             | Renderer destructor destroys sdl_window. |
 | The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate. | Snake object when created in Game() constructor is initialized at the same time |
 
+### Concurrency:
+| Criteria                                                                                  | Explanation and link(s)                                                                                        |
+|-------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| The project uses multithreading.                            | Bonus food time tracking is done in a seperate thread https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/6dd1ad00830ba0805f45187c9cdb32097ab7e65a/src/game.cpp#L206|
+| A mutex or lock is used in the project. | Flag for bonus food active is protected with mutex https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/6dd1ad00830ba0805f45187c9cdb32097ab7e65a/src/game.cpp#L199 |
+| A condition variable is used in the project. | Condition variable is used to put the bonus food timer thread to sleep. It helps to free the CPU time. https://github.com/kashi-iiitb/CppND-Capstone-Snake-Game/blob/6dd1ad00830ba0805f45187c9cdb32097ab7e65a/src/game.cpp#L179|
+
 ### Future Possible Improvements:  
-1. At the end of the game, display a message box with details like score, username.
-2. Introduce food which increases the snake speed for 5-10 seconds
-3. Move the wall position after every 30 seconds
-
-
+1. At the end of the game, display a message box with details like score, username, time taken.
+2. Move the wall position after every 30 seconds for hard level
+3. Create seperate class for various kind of foods (Healthy food, Bonus food, Poison)
 
 
 ## CC Attribution-ShareAlike 4.0 International
