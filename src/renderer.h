@@ -15,7 +15,7 @@ class Renderer {
 
   void Render(Snake const snake, std::vector<SDL_Point> const &foods,
               SDL_Point const &poison, std::vector<SDL_Point> &wall,
-              bool gamePause, Game &game);
+              bool gamePause, Game &game, SDL_Point &bonus_food);
   void UpdateWindowTitle(int score, int fps);
   void RenderPauseScreen();
 

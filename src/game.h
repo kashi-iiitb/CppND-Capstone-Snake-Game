@@ -6,6 +6,7 @@
 #include "controller.h"
 #include "renderer.h"
 #include "snake.h"
+#include <mutex>
 class Renderer;
 
 class Game {
@@ -29,6 +30,12 @@ class Game {
   std::uniform_int_distribution<int> random_w;
   std::uniform_int_distribution<int> random_h;
 
+  SDL_Point bonus_food{bonus_food.x = -1, poison.y = -1};
+  bool is_bonus_food_active = false;
+  bool already_appeared = true;
+  std::mutex mutex;
+
+
   int score{0};
   int diff_level{0};
 
@@ -38,6 +45,8 @@ class Game {
   void PlaceWall(std::vector<SDL_Point> &wall);  
   bool PoisonCell(int x, int y);
   bool FoodCell(int x, int y);
+  void BonusFoodTimer();
+  void PlaceBonusFood();
 };
 
 #endif

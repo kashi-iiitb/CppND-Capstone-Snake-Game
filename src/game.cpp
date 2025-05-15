@@ -2,6 +2,9 @@
 #include <iostream>
 //#include "SDL.h"
 #include <SDL2/SDL.h>
+#include <mutex>
+#include <thread>
+#include <condition_variable>
 
 Game::Game(std::size_t grid_width, std::size_t grid_height, int dLevel)
     : snake(grid_width, grid_height),
@@ -46,7 +49,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     //Pause the game if 'Escape' key is pressed
     //if(gamePause == false)
       Update(running, gamePause);
-    renderer.Render(snake, foods, poison, wall, gamePause, *this);
+    renderer.Render(snake, foods, poison, wall, gamePause, *this, bonus_food);
 
     frame_end = SDL_GetTicks();
 
@@ -149,6 +152,51 @@ void Game::PlacePoison(SDL_Point &poison) {
   }
 }
 
+void Game::BonusFoodTimer()
+{
+  const int bonusSeconds = 10;
+  std::condition_variable condition_var;
+  auto startTime = std::chrono::high_resolution_clock::now();
+  std::unique_lock<std::mutex> lock(mutex);
+  while (is_bonus_food_active)
+  {
+    lock.unlock();
+    auto current_Time = std::chrono::high_resolution_clock::now();
+    auto elapsed_Seconds = std::chrono::duration_cast<std::chrono::seconds>(current_Time - startTime).count();
+    if (elapsed_Seconds >= bonusSeconds)
+    {
+      // Bonus food time is up
+      is_bonus_food_active = false;
+      already_appeared = true;
+      bonus_food.x = -1;
+      bonus_food.y = -1;
+      break;
+    }
+    lock.lock();
+    // Wait for a short interval or until the condition_variable is notified
+    condition_var.wait_for(lock, std::chrono::milliseconds(800));
+  }
+}
+
+void Game::PlaceBonusFood(){
+  int x, y;  
+  x = random_w(engine);
+  y = random_h(engine);
+  if ((score != 0) && (score%8 == 0)) {
+    already_appeared = false;
+  }
+  if (!is_bonus_food_active && !already_appeared)
+    { // Check if bonus food is already active
+      bonus_food.x = x;
+      bonus_food.y = y;
+      is_bonus_food_active = true;
+      std::thread bonusFoodThread = std::thread(&Game::BonusFoodTimer, this);
+      bonusFoodThread.detach();
+      already_appeared = true;
+    }
+  
+}
+
 void Game::Update(bool &running, bool gamePause) {
   if(gamePause){
     return;
@@ -172,6 +220,7 @@ void Game::Update(bool &running, bool gamePause) {
     if (food.x == new_x && food.y == new_y) {
       score++;
       PlaceFood(food);
+      PlaceBonusFood();
       // Grow snake
       snake.GrowBody();
       //reduce the snake speed as length increases.
@@ -180,7 +229,14 @@ void Game::Update(bool &running, bool gamePause) {
         snake.speed -= 0.01;
       //change the position of poison on snake eating food
       //PlacePoison(poison);
-    }
+    } 
+  }
+  //check for bonus_food
+  if(bonus_food.x == new_x && bonus_food.y == new_y){
+    if(snake.speed > 0.12f)
+      snake.speed -= 0.02;
+    //bonus_food.x = -1;
+    //bonus_food.y = -1;
   }
   //Check for poisons
   if (poison.x == new_x && poison.y == new_y) {    
