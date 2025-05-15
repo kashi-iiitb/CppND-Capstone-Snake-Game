@@ -165,9 +165,11 @@ void Game::BonusFoodTimer()
     auto elapsed_Seconds = std::chrono::duration_cast<std::chrono::seconds>(current_Time - startTime).count();
     if (elapsed_Seconds >= bonusSeconds)
     {
+      mutex.lock();
       // Bonus food time is up
       is_bonus_food_active = false;
       already_appeared = true;
+      mutex.unlock();
       bonus_food.x = -1;
       bonus_food.y = -1;
       break;
@@ -182,19 +184,31 @@ void Game::PlaceBonusFood(){
   int x, y;  
   x = random_w(engine);
   y = random_h(engine);
-  if ((score != 0) && (score%8 == 0)) {
-    already_appeared = false;
+
+  //place bonus food whenever snake length grows by factor of 8 (8/16/24/etc.)
+  if ((score != 0) && (score%8 == 0)){
+    mutex.lock();
+    if(already_appeared) {    
+      already_appeared = false;
+    }
+    mutex.unlock();
   }
-  if (!is_bonus_food_active && !already_appeared)
+  
+  //is_bonus_food_active and already_appeared are out shared data/critical section
+  //protect them with mutex
+  mutex.lock();
+    if (!is_bonus_food_active && !already_appeared)
     { // Check if bonus food is already active
       bonus_food.x = x;
       bonus_food.y = y;
       is_bonus_food_active = true;
+      mutex.unlock(); //unlock the mutex inside if(){}
       std::thread bonusFoodThread = std::thread(&Game::BonusFoodTimer, this);
       bonusFoodThread.detach();
-      already_appeared = true;
-    }
-  
+    } else {
+      //unlock the mutex inside else{} part
+      mutex.unlock();
+    }  
 }
 
 void Game::Update(bool &running, bool gamePause) {
@@ -225,7 +239,7 @@ void Game::Update(bool &running, bool gamePause) {
       snake.GrowBody();
       //reduce the snake speed as length increases.
       //Lower threshold speed 0.12f to keep it a bit challenging
-      if(snake.speed > 0.12f)
+      if(snake.speed > 0.15f)
         snake.speed -= 0.01;
       //change the position of poison on snake eating food
       //PlacePoison(poison);
@@ -233,10 +247,10 @@ void Game::Update(bool &running, bool gamePause) {
   }
   //check for bonus_food
   if(bonus_food.x == new_x && bonus_food.y == new_y){
-    if(snake.speed > 0.12f)
+    if(snake.speed > 0.15f)
       snake.speed -= 0.02;
-    //bonus_food.x = -1;
-    //bonus_food.y = -1;
+      bonus_food.x = -1;
+      bonus_food.y = -1;
   }
   //Check for poisons
   if (poison.x == new_x && poison.y == new_y) {    
