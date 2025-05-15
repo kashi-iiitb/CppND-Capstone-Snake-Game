@@ -154,7 +154,7 @@ void Game::PlacePoison(SDL_Point &poison) {
 
 void Game::BonusFoodTimer()
 {
-  const int bonusSeconds = 10;
+  const int bonusSeconds = 15;
   std::condition_variable condition_var;
   auto startTime = std::chrono::high_resolution_clock::now();
   std::unique_lock<std::mutex> lock(mutex);
